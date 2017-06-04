@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.hard3D {
+			position: relative;
+			width: 100px;
+			height: 100px;
+			perspective: 99999999px;
+		}
+		.hard3D .unit {
+			width: 100px;
+			height: 100px;
+			transform-style: preserve-3d;
+			transform: rotateX(0deg) rotateY(15deg);
+			perspective: 99999999px;
+		}
+
+		.hard3D .unit > div {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 0.6;
+		}
+		
+		.hard3D .unit > div:nth-of-type(1) { background-color: blue; transform: rotateX(0deg) translateZ(50px); }
+		.hard3D .unit > div:nth-of-type(2) { background-color: pink; transform: rotateX(180deg) translateZ(50px); }
+		.hard3D .unit > div:nth-of-type(3) { background-color: red; transform: rotateY(90deg) translateZ(50px); }
+		.hard3D .unit > div:nth-of-type(4) { background-color: skyblue; transform: rotateY(270deg) translateZ(50px); }
+		.hard3D .unit > div:nth-of-type(5) { background-color: gold; transform: rotateX(90deg) translateZ(50px); }
+		.hard3D .unit > div:nth-of-type(6) { background-color: green; transform: rotateX(270deg) translateZ(50px); }
+
+	</style>
+</head>
+<body style="height: 100vh; width: 100%; overflow: hidden; background-image: linear-gradient(#2b2b2b, #000);">
+	<div class="hard3D" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+		<div class="unit">
+			<div>1</div>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
+			<div>5</div>
+			<div>6</div>
+		</div>
+	</div>
+	<script>
+	(function() {
+		var initX = 0, initY = 15;
+		document.onmousewheel = function(e) {
+			console.log(e);
+
+			if (e.deltaX > 0) {
+				--initX
+			} else if (e.deltaX < 0) {
+				++initX;
+			}
+
+			if (e.deltaY > 0) {
+				--initY;
+			} else if (e.deltaY < 0) {
+				++initY;
+			}
+
+			document.querySelector('.unit').style.transform = 'rotateX(' + initX + 'deg) rotateY(' + initY + 'deg)';
+			
+		}
+
+		
+	}());
+	</script>
+</body>
+</html>
