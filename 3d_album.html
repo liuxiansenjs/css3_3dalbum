@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*, *::before, *::after {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			width: 100%;
+			height: 100vh;
+			overflow: hidden;
+			background-image: linear-gradient(#2b2b2b, #000);
+		}
+
+		.album3d {
+			position: relative;
+			height: 100vh;
+			width: 100%;
+			perspective: 9999px;
+			overflow: hidden;
+		}
+		.album3d > div {
+			position: absolute;
+			top: 33%;
+			left: 50%;
+			margin-top: -100px;
+			margin-left: -75px;
+			background: #2b2b2b;
+			width: 150px;
+			height: 200px;
+			transition: all 1s ease 0s;
+			z-index: 1;
+		}
+
+		.album3d > div > img {
+			height: 100%;
+		}
+
+		.album3d a {
+			position: absolute;
+			height: 100vh;
+			width: 50%;
+			top: 0;
+			z-index: 100;
+		}
+		.album3d a:nth-of-type(1) {
+			left: 0;
+		}
+
+		.album3d a:nth-of-type(2) {
+			left: 50%;
+		}
+
+	</style>
+	<script src="js/jquery-3.2.1.js"></script>
+</head>
+<body>
+	<div class="album3d" style="margin: 40px auto; max-width: 1000px;">
+		<div><img src="img/01.jpg" alt=""></div>
+		<div><img src="img/02.jpg" alt=""></div>
+		<div><img src="img/03.jpg" alt=""></div>
+		<div><img src="img/04.jpg" alt=""></div>
+		<div><img src="img/05.jpg" alt=""></div>
+		<div><img src="img/06.jpg" alt=""></div>
+		<a href="javascript:;"></a>
+		<a href="javascript:;"></a>
+	</div>
+	<script>
+	(function() {
+		function album3d() {
+			$('.album3d').each(function() {
+				var self = this, j = 0, elements = $(self).children('div'), btns = $(self).children('a');
+				function render() {
+					for(var i = 0; i < elements.length; ++i) {
+						elements.eq(i).css({
+							transform: 'rotateX(-5deg) rotateY(' + (i + j) * 60 + 'deg) translateZ(400px)',
+						});
+						if (Math.abs((i + j) % 6) < 2 || Math.abs((i + j) % 6) >4) {
+							console.log(elements.eq(i));
+							elements.eq(i).css({
+								'z-index': 10,
+								opacity: 1,
+							});
+						} else {
+							elements.eq(i).css({
+								'z-index': 1,
+								opacity: 0.3,
+							});
+						}
+					}
+				}
+				render();
+				btns.eq(0).click(function(e) {
+					--j;
+					render();
+				});
+				btns.eq(1).click(function(e) {
+					++j;
+					render();
+				});
+			});
+			
+		}
+		album3d();
+		
+
+		
+	}());
+	</script>
+</body>
+</html>
